@@ -5,6 +5,7 @@ using Steeltoe.Connector.MySql.EF6;
 
 using WorkShopERP.Data;
 using WorkShopERP.Model;
+using WorkShopERP.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +22,8 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 
 builder.Services.AddDbContext<WorkShopERPContext>(configuration);
+
+builder.Services.AddScoped<CarBrandService>();
 
 builder.Services.AddSingleton<WeatherForecastService>();
 
