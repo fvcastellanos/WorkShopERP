@@ -7,12 +7,21 @@ namespace WorkShopERP.Pages
     public class CarBrandPage : CrudBase
     {
         [Inject]
-        protected CarBrandService service { get; set; }
+        protected CarBrandService Service { get; set; }
 
         protected override void OnInitialized()
         {
             // service.Search()
-            service.Test();
+            // service.Test();
+        }
+
+        protected override async Task OnInitializedAsync()
+        {
+            var tenant = await UserService.GetTenantCodeAsync();
+
+            System.Console.WriteLine(tenant);
+
+
         }
 
         protected override void Add()

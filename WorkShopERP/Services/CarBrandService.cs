@@ -29,7 +29,7 @@ namespace WorkShopERP.Services
 
             return dbContext.CarBrands
                 .Where(carBrand => carBrand.Tenant.Equals(tenant))
-                .Where(carBrand => carBrand.Name.ToLower().Contains(searchView.Text.ToLower()))
+                .Where(carBrand => carBrand.Name.Contains(searchView.Text, StringComparison.CurrentCultureIgnoreCase))
                 .Where(carBrand => carBrand.Active == searchView.Active)
                 .Skip(skip)
                 .Take(searchView.Size)
