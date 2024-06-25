@@ -9,6 +9,12 @@ namespace WorkShopERP.Pages
         [Inject]
         protected CarBrandService service { get; set; }
 
+        protected override void OnInitialized()
+        {
+            // service.Search()
+            service.Test();
+        }
+
         protected override void Add()
         {
             throw new NotImplementedException();

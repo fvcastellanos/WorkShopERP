@@ -1,4 +1,17 @@
-﻿@page "/"
+﻿@using WorkShopERP.Services
+
+@page "/"
+
+@attribute [Authorize]
+
+@inject UserService userService;
+
+@{
+
+    var principal = userService.GetUserAsync()
+                        .Result;
+
+}
 
 <PageTitle>Inicio</PageTitle>
 
@@ -7,7 +20,7 @@
         <div class="col-10">
             <h3>Bienvenido!</h3>
 
-            <p>Bienvenido a nuestra aplicacion</p>
+            <p>Bienvenido @principal?.Identity?.Name a nuestra aplicacion</p>
         </div>
     </div>
 </div>

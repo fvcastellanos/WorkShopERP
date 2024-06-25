@@ -1,11 +1,17 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Steeltoe.Extensions.Configuration.Placeholder;
-using Steeltoe.Connector.MySql.EF6;
 
 using WorkShopERP.Data;
 using WorkShopERP.Model;
 using WorkShopERP.Services;
+using Steeltoe.Connector.MySql.EFCore;
+using Blazorise;
+using Blazorise.Bootstrap5;
+using Blazorise.Icons.FontAwesome;
+using Auth0.AspNetCore.Authentication;
+using WorkShopERP;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,8 +27,25 @@ var configuration = builder.Configuration;
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 
-builder.Services.AddDbContext<WorkShopERPContext>(configuration);
+builder.Services.AddBlazorise(options =>
+{
+    options.Immediate = true;
+}).AddBootstrap5Providers()
+    .AddFontAwesomeIcons();
 
+builder.Services.AddDbContext<WorkShopERPContext>(options => {
+
+    options.UseMySql(configuration);
+
+});
+
+builder.Services.AddAuth0WebAppAuthentication(options => {
+    options.Domain = configuration["Auth0:Domain"];
+    options.ClientId = configuration["Auth0:ClientId"];
+
+});
+
+builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<CarBrandService>();
 
 builder.Services.AddSingleton<WeatherForecastService>();
@@ -42,6 +65,9 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
