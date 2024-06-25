@@ -1,5 +1,6 @@
 
 using Microsoft.AspNetCore.Components;
+using WorkShopERP.Domain.Views;
 using WorkShopERP.Services;
 
 namespace WorkShopERP.Pages
@@ -9,19 +10,41 @@ namespace WorkShopERP.Pages
         [Inject]
         protected CarBrandService Service { get; set; }
 
-        protected override void OnInitialized()
-        {
-            // service.Search()
-            // service.Test();
-        }
+        IEnumerable<CarBrandView> CarBrands { get; set; }
+
+        protected SearchView SearchView { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
-            var tenant = await UserService.GetTenantCodeAsync();
+            CarBrands = [];
 
-            System.Console.WriteLine(tenant);
+            SearchView = new SearchView
+            {
+                Text = "",
+                Active = 1,
+                Page = DefaultPage,
+                Size = DefaultPageSize
+            };
+        }
 
+        protected void Search()
+        {
+            try
+            {
+                var tenant = GetTenantCode();
 
+                var result = Service.Search(SearchView, tenant);
+
+                if (result != null)
+                {
+                    CarBrands = result;
+                }
+
+            }
+            catch (Exception exception)
+            {
+                ShowErrorMessage(exception.Message);
+            }
         }
 
         protected override void Add()

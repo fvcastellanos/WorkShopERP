@@ -3,3 +3,43 @@
 @page "/car-brands";
 
 @attribute [Authorize];
+
+<PageTitle>Marcas de Vehículos</PageTitle>
+
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-10">
+            <div class="top-separator">
+                <h4 class="card-title">Marcas de Vehículos</h4>
+                <div class="top-separator">
+                    <div class="card top-separator">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-8">
+                                    <Field>
+                                        <FieldLabel>Texto</FieldLabel>
+                                        <TextEdit @bind-Text="@SearchView.Text" Placeholder="Ingrese texto" />
+                                    </Field>                                    
+                                </div>
+                                <div class="col-4">
+                                    <Field>
+                                        <FieldLabel>Estado</FieldLabel>
+                                        <Select TValue="int" @bind-SelectedValue="@SearchView.Active">
+                                            <SelectItem Value=1>Activo</SelectItem>
+                                            <SelectItem Value=0>Inactivo</SelectItem>
+                                        </Select>
+                                    </Field>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <Button Color="Color.Secondary" Clicked="@Search">Buscar</Button>
+                            &nbsp;
+                            <Button Color="Color.Primary">Agregar Marca de Vehículo</Button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

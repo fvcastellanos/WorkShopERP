@@ -5,6 +5,9 @@ namespace WorkShopERP.Pages
 {
     public abstract class CrudBase : PageBase
     {
+        protected const int DefaultPageSize = 25;
+        protected const int DefaultPage = 1;
+        
         protected EditContext EditContext;
         protected bool DisplayModal;
         protected bool DisplayDeleteModal;

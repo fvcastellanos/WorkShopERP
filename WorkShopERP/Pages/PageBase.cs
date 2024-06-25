@@ -1,4 +1,5 @@
 
+using System.Security.Claims;
 using Microsoft.AspNetCore.Components;
 using WorkShopERP.Services;
 
@@ -23,5 +24,27 @@ namespace WorkShopERP.Pages
             DisplayErrorMessage = true;
             ErrorMessage = message;
         }        
+
+        protected async Task<ClaimsPrincipal> GetPrincipalAsync()
+        {
+            return await UserService.GetUserAsync();
+        }
+
+        protected ClaimsPrincipal GetPrincipal()
+        {
+            return UserService.GetUserAsync()
+                .Result;
+        }
+
+        protected async Task<string> GetTenantCodeAsync()
+        {
+            return await UserService.GetTenantCodeAsync();
+        }
+
+        protected string GetTenantCode()
+        {
+            return UserService.GetTenantCodeAsync()
+                .Result;
+        }
     }
 }
